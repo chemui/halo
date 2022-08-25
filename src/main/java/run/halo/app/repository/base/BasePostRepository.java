@@ -49,6 +49,16 @@ public interface BasePostRepository<POST extends BasePost> extends BaseRepositor
     Page<POST> findAllByStatus(@NonNull PostStatus status, @NonNull Pageable pageable);
 
     /**
+     * Finds posts by status and pageable.
+     *
+     * @param status post status must not be null
+     * @param pageable page info must not be null
+     * @return a page of post
+     */
+    @NonNull
+    Page<POST> findAllByStatusIn(@NonNull List<PostStatus> status, @NonNull Pageable pageable);
+
+    /**
      * Finds posts by status.
      *
      * @param status post staus must not be null

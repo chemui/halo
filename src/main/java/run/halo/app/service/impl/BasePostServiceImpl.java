@@ -3,6 +3,7 @@ package run.halo.app.service.impl;
 import static org.springframework.data.domain.Sort.Direction.ASC;
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -226,7 +227,7 @@ public abstract class BasePostServiceImpl<POST extends BasePost>
         Assert.isTrue(top > 0, "Top number must not be less than 0");
 
         PageRequest latestPageable = PageRequest.of(0, top, Sort.by(DESC, "createTime"));
-        return basePostRepository.findAllByStatus(PostStatus.PUBLISHED, latestPageable)
+        return basePostRepository.findAllByStatusIn(Arrays.asList(PostStatus.PUBLISHED, PostStatus.INTIMATE), latestPageable)
             .getContent();
     }
 
@@ -243,7 +244,7 @@ public abstract class BasePostServiceImpl<POST extends BasePost>
         Assert.notNull(status, "Post status must not be null");
         Assert.notNull(pageable, "Page info must not be null");
 
-        return basePostRepository.findAllByStatus(status, pageable);
+        return basePostRepository.findAllByStatusIn(Arrays.asList(status, PostStatus.INTIMATE), pageable);
     }
 
     @Override

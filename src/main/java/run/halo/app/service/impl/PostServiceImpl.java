@@ -699,7 +699,7 @@ public class PostServiceImpl extends BasePostServiceImpl<Post> implements PostSe
      */
     private StringBuilder getFrontMatterYaml(Post post) {
         StringBuilder frontMatter = new StringBuilder("---\n");
-        frontMatter.append("title: ").append(post.getTitle()).append("\n");
+        frontMatter.append("title: \"").append(post.getTitle()).append("\"\n");
         frontMatter.append("date: ").append(post.getCreateTime()).append("\n");
         frontMatter.append("updated: ").append(post.getUpdateTime()).append("\n");
 

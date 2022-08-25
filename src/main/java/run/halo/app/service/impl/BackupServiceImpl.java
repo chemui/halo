@@ -674,7 +674,8 @@ public class BackupServiceImpl implements BackupService {
             }
 
             // Remove files in the temporary directory
-            run.halo.app.utils.FileUtils.deleteFolder(markdownFileTempPath);
+            // run.halo.app.utils.FileUtils.deleteFolder(markdownFileTempPath);
+            log.info("markdown temp path: {}", markdownFileTempPath);
 
             // Build backup dto
             return buildBackupDto(DATA_EXPORT_MARKDOWN_BASE_URI, markdownZipPath);

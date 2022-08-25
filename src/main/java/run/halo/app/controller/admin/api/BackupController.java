@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.simpleframework.xml.core.Validate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -39,6 +41,8 @@ import run.halo.app.model.dto.BackupDTO;
 import run.halo.app.model.dto.post.BasePostDetailDTO;
 import run.halo.app.model.params.PostMarkdownParam;
 import run.halo.app.service.BackupService;
+import run.halo.app.service.QQZoneService;
+import run.halo.app.utils.QQZoneExporter;
 
 /**
  * Backup controller
@@ -259,5 +263,13 @@ public class BackupController {
             .body(backupResource);
     }
 
+    @Autowired
+    private QQZoneService qqZoneService;
+
+    @PostMapping("qqzone/export")
+    @ApiOperation("Export QQZone contents as jounals")
+    public void exportQQZone(@Validate @RequestBody QQZoneExporter.QQZoneAccount params) {
+        qqZoneService.export(params);
+    }
 
 }
