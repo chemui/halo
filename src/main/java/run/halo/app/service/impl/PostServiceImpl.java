@@ -706,20 +706,24 @@ public class PostServiceImpl extends BasePostServiceImpl<Post> implements PostSe
         // set fullPath
         frontMatter.append("url: ").append(postAssembler.buildFullPath(post)).append("\n");
 
+        frontMatter.append("password: \"").append(post.getPassword()).append("\"\n");
+        frontMatter.append("thumbnail: \"").append(post.getThumbnail()).append("\"\n");
+        frontMatter.append("excerpt: \"").append(post.getSummary()).append("\"\n");
+
         // set category
         // classification with hierarchies has not been processed yet
         List<Category> categories = postCategoryService.listCategoriesBy(post.getId());
         StringBuilder categoryContent = new StringBuilder();
-        categories.forEach(category -> categoryContent.append("- ").append(category.getName())
-            .append("\n"));
+        categories.forEach(category -> categoryContent.append("- [\"").append(category.getName()).append("\"]\n"));
         frontMatter.append("categories: ").append("\n").append(categoryContent);
 
         // set tags
         List<Tag> tags = postTagService.listTagsBy(post.getId());
         StringBuilder tagContent = new StringBuilder();
-        tags.forEach(tag -> tagContent.append("- ").append(tag.getName()).append("\n"));
+        tags.forEach(tag -> tagContent.append("- [\"").append(tag.getName()).append("\"]\n"));
         frontMatter.append("tags: ").append("\n").append(tagContent);
-
+        frontMatter.append("top: 0\n");
+        frontMatter.append("toc: 0\n");
         frontMatter.append("---\n");
         return frontMatter;
     }
